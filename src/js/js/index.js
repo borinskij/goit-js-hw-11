@@ -7,3 +7,7 @@ axios
     'https://pixabay.com/api/?key=30088008-597ccc3296e84add455afba6c&q=yellow+flowers&image_type=photo'
   )
   .then(console.log);
+
+const a = 9;
+const b = 5;
+console.log('res', a + b);
