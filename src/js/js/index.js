@@ -21,10 +21,12 @@ formRefs.addEventListener('submit', start);
 async function start(event) {
   event.preventDefault();
   const search = event.target.elements.searchQuery.value.trim();
-  if (!search) return;
+  if (!search)
+    return (
+      (markupGallery.innerHTML = ''), loadBtRef.classList.add('visually-hidden')
+    );
   try {
     const data = await getPhoto(search);
-    console.log('data :', data);
     const markup = markupCard(data);
     upDate(markup);
   } catch (error) {
@@ -49,9 +51,16 @@ function upDate(markup = '') {
   markupGallery.innerHTML = markup;
   loadBtRef.classList.remove('visually-hidden');
 }
+
 loadBtRef.addEventListener('click', loadImg);
 
-function loadImg() {
-  getPhoto((page += 1));
-  markupGallery.insertAdjacentElement('beforeend', data);
+async function loadImg() {
+  page += 1;
+  try {
+    const data = await getPhoto(page);
+    const markup = markupCard(data);
+    upDate(markup);
+  } catch (error) {
+    Notify.failure(error.message);
+  }
 }
