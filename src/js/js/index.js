@@ -17,16 +17,18 @@ const searchParams = new URLSearchParams({
 const baseURL = `https://pixabay.com/api/?${searchParams}`;
 
 formRefs.addEventListener('submit', start);
+let search;
+let page = 1;
 
 async function start(event) {
   event.preventDefault();
-  const search = event.target.elements.searchQuery.value.trim();
+  search = event.target.elements.searchQuery.value.trim();
   if (!search)
     return (
       (markupGallery.innerHTML = ''), loadBtRef.classList.add('visually-hidden')
     );
   try {
-    const data = await getPhoto(search);
+    const data = await getPhoto(search, page);
     const markup = markupCard(data);
     upDate(markup);
   } catch (error) {
@@ -34,12 +36,11 @@ async function start(event) {
   }
 }
 
-let page = 1;
-
-async function getPhoto(search) {
+async function getPhoto(search, page) {
   const {
     data: { hits },
   } = await axios.get(`${baseURL}&q=${search}&page=${page}&per_page=40`);
+  console.log('hits', hits);
   if (hits.length === 0)
     throw new Error(
       'Sorry, there are no images matching your search query. Please try again.'
@@ -54,12 +55,18 @@ function upDate(markup = '') {
 
 loadBtRef.addEventListener('click', loadImg);
 
-async function loadImg() {
-  page += 1;
+function loadImg() {
+  page++;
+  mountData(search, page);
+  console.log('page1', page);
+}
+async function mountData(search, page) {
+  console.log('page2', page);
+
   try {
-    const data = await getPhoto(page);
+    const data = await getPhoto(search, page);
     const markup = markupCard(data);
-    upDate(markup);
+    markupGallery.insertAdjacentHTML('beforeend', markup);
   } catch (error) {
     Notify.failure(error.message);
   }
