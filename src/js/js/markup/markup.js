@@ -1,11 +1,8 @@
-import bootstrap from 'bootstrap';
 export const markupCard = (element = []) => {
   return element
     .map(e => {
       return `
 <div class="photo-card">
-
- 
 <img src="${e.webformatURL}" class="rounded mx-auto d-block img-thumbnail" alt="${e.tags}" loading="lazy" widht = "250" height = "250"/>
 
 <li>
