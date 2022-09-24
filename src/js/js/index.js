@@ -99,7 +99,7 @@ function upDate(markup = '') {
 // window.addEventListener('scroll', throttle(scrolLoad, 1000));
 
 window.addEventListener('scroll', scrolLoad);
-function scrolLoad() {
+async function scrolLoad() {
   console.log('nmmnmbknbkn', 'nmmnmbknbkn');
   const positionDocument = document.documentElement.getBoundingClientRect();
   if (totalPages === total) {
@@ -110,7 +110,7 @@ function scrolLoad() {
     document.documentElement.clientHeight + 350
   ) {
     page++;
-    mountData(search, page);
+    await mountData(search, page);
   }
 }
 async function mountData(search, page) {
