@@ -1,6 +1,6 @@
 import axios from 'axios';
 import bootstrap from 'bootstrap';
-
+import throttle from 'lodash.throttle';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { markupCard } from './markup/markup';
 import { formRefs, markupGallery, loadBtRef } from './refs/refs';
@@ -98,12 +98,12 @@ function upDate(markup = '') {
 ///////////========КНОПКА========////////////////////
 // window.addEventListener('scroll', throttle(scrolLoad, 1000));
 
-window.addEventListener('scroll', scrolLoad);
+window.addEventListener('scroll', throttle(scrolLoad, 500));
 async function scrolLoad() {
   console.log('nmmnmbknbkn', 'nmmnmbknbkn');
   const positionDocument = document.documentElement.getBoundingClientRect();
   if (totalPages === total) {
-    // Notify.info("We're sorry, but you've reached the end of search results.");
+    Notify.info("We're sorry, but you've reached the end of search results.");
     return;
   } else if (
     positionDocument.bottom <
