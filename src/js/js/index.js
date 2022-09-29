@@ -100,7 +100,7 @@ function upDate(markup = '') {
 
 window.addEventListener('scroll', throttle(scrolLoad, 500));
 async function scrolLoad() {
-  console.log('nmmnmbknbkn', 'nmmnmbknbkn');
+  // console.log('nmmnmbknbkn', 'nmmnmbknbkn');
   const positionDocument = document.documentElement.getBoundingClientRect();
   if (totalPages === total) {
     Notify.info("We're sorry, but you've reached the end of search results.");
